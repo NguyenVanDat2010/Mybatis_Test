@@ -13,9 +13,17 @@ import java.util.List;
 @Repository
 public interface IEmployeeRepository {
     @Select("select * from employees")
+    @Results(value = {@Result(property = "id", column = "id"),
+            @Result(property = "firstName", column = "first_name"),
+            @Result(property = "lastName", column = "last_name"),
+            @Result(property = "email", column = "email")})
     List<Employee> findAll();
 
-    @Select("select * from employees where id = #{id}")
+    @Select("select first_name, last_name, email from employees where id = #{id}")
+    @Results(value = {@Result(property = "id", column = "id"),
+            @Result(property = "firstName", column = "first_name"),
+            @Result(property = "lastName", column = "last_name"),
+            @Result(property = "email", column = "email")})
     Employee findById(@Param("id") Long id);
 
     @Delete("delete from employees where id = #{id}")
